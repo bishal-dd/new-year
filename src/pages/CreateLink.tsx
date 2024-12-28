@@ -14,7 +14,6 @@ export function CreateLink() {
     e.preventDefault();
     const params = new URLSearchParams({ name, message });
     const url = `${window.location.origin}/?${params.toString()}`;
-    console.log(url);
 
     try {
       setIsLoading(true); // Start loading
@@ -42,10 +41,10 @@ export function CreateLink() {
 
         // Navigate to the new URL or any other relevant page
       } else {
-        console.error("Failed to shorten URL:", response.statusText);
+        throw new Error("Failed to shorten URL:");
       }
     } catch (error) {
-      console.error("Error shortening the URL:", error);
+      throw new Error(String(error));
     } finally {
       setIsLoading(false); // Stop loading
     }

@@ -118,8 +118,8 @@ export const Celebration: React.FC = () => {
           )}
         </div>
       </div>
-      <div className="relative z-10 flex flex-col items-center text-center  w-full h-full  px-4">
-        <div className="absolute w-full" id="fireworks-example"></div>
+      <div className="relative flex flex-col items-center w-full h-full  px-4">
+        <div id="fireworks-example"></div>
       </div>
     </div>
   );

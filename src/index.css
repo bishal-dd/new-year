@@ -21,3 +21,8 @@
     transform: rotate(360deg);
   }
 }
+
+#fireworks-example {
+  position: absolute;
+  width: 100%;
+}
