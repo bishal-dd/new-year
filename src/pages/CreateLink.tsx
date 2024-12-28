@@ -17,6 +17,7 @@ export function CreateLink() {
 
     try {
       setIsLoading(true); // Start loading
+      setIsUrlCopied(false);
       // Prepare the request body for the TinyURL API
       const requestBody = {
         url: url,
