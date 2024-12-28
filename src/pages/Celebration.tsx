@@ -2,29 +2,31 @@ import React, { useEffect, useState } from "react";
 import { Fireworks } from "fireworks-js";
 import { useSearchParams } from "react-router-dom";
 
-export const Celebration: React.FC = () => {
+export const Celebration = () => {
   const [searchParams] = useSearchParams();
   const [showMessage, setShowMessage] = useState(false);
   const name = searchParams.get("name");
   const message = searchParams.get("message");
+
   const handleUserInteraction = () => {
     setShowMessage(true);
   };
+
   useEffect(() => {
     const container = document.querySelector("#fireworks-example");
     if (container) {
       const fireworks = new Fireworks(container, {
         rocketsPoint: {
-          min: 10,
-          max: 20,
+          min: 48, // Even more centered launch points
+          max: 52,
         },
         hue: {
           min: 0,
           max: 360,
         },
         delay: {
-          min: 0.015,
-          max: 0.03,
+          min: 2, // Much longer delay between launches
+          max: 4, // Occasional longer delays
         },
         lineWidth: {
           explosion: {
@@ -37,16 +39,16 @@ export const Celebration: React.FC = () => {
           },
         },
         lineStyle: "round",
-        acceleration: 1.05,
-        friction: 0.95,
+        acceleration: 1.01, // Even gentler acceleration
+        friction: 0.97,
         gravity: 1.5,
-        particles: 20,
+        particles: 60, // More particles per explosion for better impact
         traceLength: 3,
-        flickering: 50,
-        opacity: 0.5,
-        explosion: 5,
-        intensity: 20,
-        traceSpeed: 10,
+        flickering: 25,
+        opacity: 0.8, // Higher opacity for better visibility
+        explosion: 10, // Larger explosions since they're less frequent
+        intensity: 2, // Drastically reduced intensity
+        traceSpeed: 8,
         autoresize: true,
         brightness: {
           min: 50,
@@ -59,13 +61,7 @@ export const Celebration: React.FC = () => {
         mouse: {
           click: true,
           move: false,
-          max: 0,
-        },
-        boundaries: {
-          x: 50,
-          y: 50,
-          width: window.innerWidth,
-          height: window.innerHeight,
+          max: 1, // Only one mouse-triggered firework at a time
         },
         sound: {
           enabled: true,
@@ -73,22 +69,20 @@ export const Celebration: React.FC = () => {
           volume: { min: 4, max: 8 },
         },
       });
-
       fireworks.start();
-
-      // Cleanup fireworks on component unmount
-      return () => {
-        fireworks.stop();
-      };
+      return () => fireworks.stop();
     }
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 to-black relative overflow-hidden flex flex-col items-center ">
-      {/* Fireworks Canvas */}
+    <div className="fixed inset-0 bg-gradient-to-b from-purple-900 to-black overflow-hidden">
+      {/* Fireworks container - now positioned absolutely with full viewport dimensions */}
+      <div className="absolute inset-0">
+        <canvas id="fireworks-example" className="w-full h-full" />
+      </div>
 
-      {/* Celebration Content */}
-      <div className="relative z-10 flex flex-col items-center text-center  w-full h-full mt-20 px-4">
+      {/* Content overlay */}
+      <div className="relative z-10 flex flex-col items-center text-center w-full h-full pt-20 px-4">
         <div>
           <h1 className="text-6xl font-bold text-white mb-8 animate-bounce">
             Happy New Year!
@@ -118,11 +112,6 @@ export const Celebration: React.FC = () => {
           )}
         </div>
       </div>
-      <div className="relative flex flex-col items-center w-full h-full  px-4">
-        <div id="fireworks-example"></div>
-      </div>
     </div>
   );
 };
-
-export default Celebration;
